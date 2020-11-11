@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { TablePagination } from '@material-ui/core';
 import moment from 'moment';
-import app from '../../services/firebase';
+import Timeline from '@material-ui/lab/Timeline';
+import TimelineItem from '@material-ui/lab/TimelineItem';
+import TimelineSeparator from '@material-ui/lab/TimelineSeparator';
+import TimelineConnector from '@material-ui/lab/TimelineConnector';
+import TimelineContent from '@material-ui/lab/TimelineContent';
+import TimelineDot from '@material-ui/lab/TimelineDot';
 import 'firebase/database';
+import app from '../../services/firebase';
 
 const CoronaNews = () => {
   const [news, setNews] = useState([]);
@@ -41,19 +47,27 @@ const CoronaNews = () => {
     const data = news.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((tgl) => {
       const databerita = tgl.activity.map((act) => {
         return (
-          <li>
-            <a href={act.url} target="blank">{act.title}</a>
+          <li className="berita">
+            <a href={act.url} target="blank"><strong>{act.title}</strong></a>
             <p>{act.desc}</p>
           </li>
         );
       });
       return (
-        <div>
-          <p>{moment(tgl.date).format('dddd, Do MMM YYYY')}</p>
-          <ul>
-            {databerita}
-          </ul>
-        </div>
+        <Timeline align="alternate">
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot variant="outlined" />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <p>{moment(tgl.date).format('dddd, Do MMM YYYY')}</p>
+              <ul>
+                {databerita}
+              </ul>
+            </TimelineContent>
+          </TimelineItem>
+        </Timeline>
       );
     });
     return (

@@ -26,3 +26,15 @@
   background-color: white;
   
 }
+
+.berita a {
+  color : black;
+  cursor: pointer;
+}
+
+.MuiTimelineItem-missingOppositeContent:before {
+  flex: 0 1;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: 0%;
+}
