@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { TablePagination } from '@material-ui/core';
 import moment from 'moment';
 import Timeline from '@material-ui/lab/Timeline';
@@ -23,6 +24,7 @@ const CoronaNews = () => {
       const firebaseNews = snapshot.val();
       setNews(firebaseNews.data);
       setIsLoading(false);
+      console.log(firebaseNews);
     });
   }, []);
 
@@ -61,7 +63,9 @@ const CoronaNews = () => {
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <p>{moment(tgl.date).format('dddd, Do MMM YYYY')}</p>
+              <Link to={`/infoCorona/${tgl.date}`}>
+                <p>{moment(tgl.date).format('dddd, Do MMM YYYY')}</p>
+              </Link>
               <ul>
                 {databerita}
               </ul>

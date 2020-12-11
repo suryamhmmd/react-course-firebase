@@ -1,0 +1,42 @@
+import axios from 'axios';
+import { getCookie, setCookie } from '../utils/cookie';
+
+function getTokenAuth() {
+  // console.log(JSON.parse(getCookie('token')).value);
+  if (getCookie('token')) {
+    console.log('true');
+    return JSON.parse(getCookie('token'));
+  }
+  return '';
+}
+
+const createAxiosInterceptor = (url) => {
+  const axiosCreate = axios.create({
+    baseURL: url,
+    headers: {
+      Accept: 'application/json',
+      'Accept-Language': 'es',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getTokenAuth()}`,
+    },
+  });
+
+  axiosCreate.interceptors.response.use(
+    (response) => {
+      return response.data;
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        setCookie('userData', '');
+        window.location.replace('/');
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return axiosCreate;
+};
+
+const BaseService = createAxiosInterceptor(process.env.REACT_APP_API);
+
+export default BaseService;

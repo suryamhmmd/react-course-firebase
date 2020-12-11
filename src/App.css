@@ -32,9 +32,11 @@
   cursor: pointer;
 }
 
-.MuiTimelineItem-missingOppositeContent:before {
+.MuiTimelineItem-missingOppositeContent::before {
   flex: 0 1;
   flex-grow: 0;
   flex-shrink: 1;
   flex-basis: 0%;
 }
+
+

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isUserAuthenticated } from '../../utils/cookie';
 
 const Header = () => {
-  const listMenu = ['home', 'profile', 'contact', 'infoCorona'];
+  const listMenu = ['home', 'profile', 'contact', 'infoCorona', 'product'];
   return (
     <div className="header">
       {listMenu.map((name) => {
@@ -12,6 +13,7 @@ const Header = () => {
           </Link>
         );
       })}
+      {isUserAuthenticated() ? <span>logout</span> : <div />}
     </div>
   );
 };
